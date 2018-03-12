@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import { AutoComplete } from 'antd';
 import { message, Select } from 'antd';
 const Option = Select.Option;
@@ -9,13 +11,6 @@ class DimensionSearch extends React.Component {
 
 	constructor() {
 		super();
-		var me = this;
-		this.state = {
-			filteredDimensions: [],
-			OutsideDimensions: [],
-			InsideDimensions: [],
-			thickDimensions: [],
-		}
 		this.submitSearch = this.submitSearch.bind(this);
 		this.getDimensionFilter = this.getDimensionFilter.bind(this);
 	}
@@ -31,7 +26,6 @@ class DimensionSearch extends React.Component {
 	render() {
 
 		console.log('dimension', this.props.dimension);
-
 		//-------------optionOutsideSelections--------------
 		var outsideDiameter = [];
 		// outsideDiameter use filter duplicate dimension
@@ -174,14 +168,23 @@ function SearchLoading() {
 	);
 }
 
-DimensionSearch.propTypes = {
-	dimension : PropTypes.array,
-	sendBearingDimension : PropTypes.func,
-	sendDimensionFilter : PropTypes.func,
-	selectedOutside : PropTypes.string,
-	selectedInside : PropTypes.string,
-	selectedThick : PropTypes.string,
-	isSearchLoading : PropTypes.bool
-};
+// DimensionSearch.propTypes = {
+// 	dimension : PropTypes.array,
+// 	sendBearingDimension : PropTypes.func,
+// 	sendDimensionFilter : PropTypes.func,
+// 	selectedOutside : PropTypes.string,
+// 	selectedInside : PropTypes.string,
+// 	selectedThick : PropTypes.string,
+// 	isSearchLoading : PropTypes.bool
+// };
 
+function mapStateToProps(state){
+	console.log('state-bearingDimension: ', state);
+	return {  
+		dimension: state.bearingDimension.items,
+		isLoading: state.bearingDimension.isLoading,
+		selectedType: state.bearingDimension.selectedType
+  	}
+}
+DimensionSearch = connect(mapStateToProps)(DimensionSearch);
 export default DimensionSearch;

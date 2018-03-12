@@ -4,30 +4,15 @@ import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../c
 var urlBearingTypes = URL + API_bearingTypes ;
 var urlDimension = URL + API_bearingDimensions;
 
-export function fetchBearingTypes(dispatch) {
-    console.log('fetchBearingTypes', urlBearingTypes);
-    dispatch(fetchPostsRequest());
+export function fetchBearingTypes() {
     return (dispatch) => {
+        dispatch(fetchBearingTypesRequest());
         axios.get(urlBearingTypes)
         .then((response) => {
-          dispatch(fetchPostsSuccess(response.data))
+          dispatch(fetchBearingTypesSuccess(response.data))
         })
         .catch((error) => {
-          dispatch(fetchPostsError(error))
-        })
-    };
-}
-
-export function fetchBearingDimensions(dispatch) {
-    console.log('fetchBearingDimensions', urlDimension);
-    dispatch(fetchPostsRequest());
-    return (dispatch) => {
-        axios.get(urlDimension)
-        .then((response) => {
-          dispatch(fetchPostsSuccess(response.data))
-        })
-        .catch((error) => {
-          dispatch(fetchPostsError(error))
+          dispatch(fetchBearingTypesError(error))
         })
     };
 }
@@ -40,24 +25,61 @@ export function changeTypeByDropdown(val) {
     }
 }
 
-export function fetchPostsRequest() {
-    console.log('fetchPostsRequest');
+export function fetchBearingTypesRequest() {
     return {
-        type: "FETCH_REQUEST"
+        type: "FETCH_BEARING_TYPES_REQUEST"
     }
 }
 
-export function fetchPostsSuccess(payload) {
-    console.log('fetchPostsSuccess', payload);
+export function fetchBearingTypesSuccess(payload) {
     return {
-      type: "FETCH_SUCCESS",
+      type: "FETCH_BEARING_TYPES_SUCCESS",
       payload
     }
 }
   
-export function fetchPostsError(payload) {
+export function fetchBearingTypesError(payload) {
     return {
-      type: "FETCH_ERROR",
+      type: "FETCH_BEARING_TYPES_ERROR",
+      payload
+    }
+}
+
+export function fetchBearingDimensions(type) {
+    return (dispatch) => {
+        dispatch(fetchDimensionsRequest());
+        return fetchDimensions(type).then(([response, json]) =>{
+            if(response.status === 200){
+                dispatch(fetchDimensionsSuccess(json))
+            }
+            else{
+                dispatch(fetchDimensionsError())
+            }
+        })
+    }
+}
+
+function fetchDimensions(type) {
+    return fetch(urlDimension + type, { method: 'GET'})
+       .then( response => Promise.all([response, response.json()]));
+}
+
+export function fetchDimensionsRequest() {
+    return {
+        type: "FETCH_DIMENSIONS_REQUEST"
+    }
+}
+
+export function fetchDimensionsSuccess(payload) {
+    return {
+      type: "FETCH_DIMENSIONS_SUCCESS",
+      payload
+    }
+}
+  
+export function fetchDimensionsError(payload) {
+    return {
+      type: "FETCH_DIMENSIONS_ERROR",
       payload
     }
 }

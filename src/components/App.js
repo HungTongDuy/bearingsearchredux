@@ -12,7 +12,7 @@ import BearingType from './bearingType.jsx';
 // eslint-disable-next-line
 import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../constants/constants.js';
 
-import { fetchBearingTypes, fetchPostsRequest, fetchPostsSuccess, fetchPostsError } from '../actions';
+import { fetchBearingTypes, fetchPostsRequest, fetchPostsSuccess, fetchPostsError , fetchBearingDimensions} from '../actions';
 import { connect } from 'react-redux';
 // eslint-disable-next-line
 const CheckboxGroup = Checkbox.Group;
@@ -24,14 +24,14 @@ var urlBearingTypes = URL + API_bearingTypes;
 
 class App extends Component {
 
-	componentDidMount() {
-		this.props.dispatch(fetchBearingTypes(this.props.dispatch));
+	componentWillMount() {
+		this.props.dispatch(fetchBearingTypes());
+		this.props.dispatch(fetchBearingDimensions(1));
 	}
 
 	render() {
-		console.log('bearingTypes-- ', this.props.bearingTypes);
-		console.log('isLoading-- ', this.props.isLoading);
-		if (this.props.isLoading) {
+		console.log('isLoading-- ', this.props.dimensionsLoading);
+		if (this.props.bearingTypesLoading && this.props.dimensionsLoading) {
 			return (
 				<div>
 					<div className="logo">
@@ -52,7 +52,7 @@ class App extends Component {
 				</div>
 			);
 		}
-
+		console.log('bearingdimension-- ', this.props.bearingDimension);
 		return (
 			<div>
 				<div className="logo">
@@ -63,23 +63,8 @@ class App extends Component {
 				</div>
 				<div className="search-content">
 					<div className="container">
-						<div className="row">
-						{/* <BearingType 
-							bearingTypes= {this.props.bearingTypes}
-							getTypeByCarousel = {"carousel"}
-							getTypeBySelection = {"selection"}
-							selectedType = {1}
-						/> */}
-						<ul>
-							{   !this.props.bearingTypes ? 
-								this.props.bearingTypes.map((post, k) =>{
-									return (
-										<li>{post.title}</li>
-									)
-								}) : 'abc'
-							}
-						</ul>
-						</div>
+							<BearingType />
+							<BearingDimension />
 					</div>
 				</div>
 			</div>
@@ -100,12 +85,14 @@ function SearchLoading() {
 		</div>
 	);
 }
-function mapStateToProps(state){
+
+function mapStateToProps(state) {
 	console.log('state: ', state);
 	return {  
 		bearingTypes: state.bearingTypes.items,
 		bearingDimension: state.bearingDimension,
-		isLoading: state.bearingTypes.isLoading
+		bearingTypesLoading: state.bearingTypes.isLoading,
+		dimensionsLoading: state.bearingDimension.isLoading
   	}
 }
 App = connect(mapStateToProps)(App)
