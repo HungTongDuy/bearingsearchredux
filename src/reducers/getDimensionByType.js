@@ -8,14 +8,12 @@ function getDimensionByType(state = [], action) {
     switch(action.type) {
         case "FETCH_DIMENSIONS_REQUEST":
             return {
-                ...state,
                 isLoading: true,
                 error: null
             };
         case "FETCH_DIMENSIONS_SUCCESS":
             console.log('action.payload', action.payload);
             return {
-                ...state,
                 items: action.payload,
                 isLoading: false,
                 selectedType: 1

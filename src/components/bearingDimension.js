@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { fetchBearingDimensions} from '../actions';
+
 
 import { AutoComplete } from 'antd';
 import { message, Select } from 'antd';
@@ -13,6 +15,7 @@ class DimensionSearch extends React.Component {
 		super();
 		this.submitSearch = this.submitSearch.bind(this);
 		this.getDimensionFilter = this.getDimensionFilter.bind(this);
+		this.demo = this.demo.bind(this);
 	}
 
 	getDimensionFilter(inside, outside, thick) {
@@ -23,13 +26,25 @@ class DimensionSearch extends React.Component {
 		this.props.sendDimensionToSearch();
 	}
 
-	render() {
+	demo() {
+		console.log('demo');
+	}
 
+	componentWillMount() {
+		this.props.dispatch(fetchBearingDimensions(1));
+	}
+
+	render() {
+		
+		this.demo;
 		console.log('dimension', this.props.dimension);
 		//-------------optionOutsideSelections--------------
 		var outsideDiameter = [];
 		// outsideDiameter use filter duplicate dimension
 		var outsideDiameterObject = [];
+		if (this.props.bearingTypesLoading) {
+			return(<div></div>);
+		}
 		// outsideDiameterObject use add Object after filter by outside diameter
 		this.props.dimension.map(function (el, i) {
 			if (outsideDiameter.indexOf(el.D.toString()) === -1) {
@@ -44,7 +59,6 @@ class DimensionSearch extends React.Component {
 			return (
 				<Option key={k} value={el.D_inch}>{el.D_inch}</Option>
 			);
-			
 		});
 		//------------end-optionOutsideSelections--------------
 
@@ -183,7 +197,8 @@ function mapStateToProps(state){
 	return {  
 		dimension: state.bearingDimension.items,
 		isLoading: state.bearingDimension.isLoading,
-		selectedType: state.bearingDimension.selectedType
+		selectedType: state.bearingDimension.selectedType,
+		bearingTypesLoading: state.bearingTypes.isLoading
   	}
 }
 DimensionSearch = connect(mapStateToProps)(DimensionSearch);

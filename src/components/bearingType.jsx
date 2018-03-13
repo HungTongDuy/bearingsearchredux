@@ -6,7 +6,7 @@ import {  Select, Carousel } from 'antd';
 
 import { connect } from 'react-redux';
 import { changeTypeByDropdown } from '../actions';
-
+import { fetchBearingTypes } from '../actions';
 const Option = Select.Option;
 
 var settings_carousel = {
@@ -35,6 +35,10 @@ class bearingType extends React.Component {
 		this.changeTypeBySelection = this.changeTypeBySelection.bind(this);
 		this.changeTypeByCarousel = this.changeTypeByCarousel.bind(this);
 		this.demo = this.demo.bind(this);
+	}
+
+	componentDidMount() {
+		
 	}
 
 	changeTypeBySelection(value) {

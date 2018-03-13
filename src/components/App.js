@@ -12,7 +12,7 @@ import BearingType from './bearingType.jsx';
 // eslint-disable-next-line
 import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../constants/constants.js';
 
-import { fetchBearingTypes, fetchPostsRequest, fetchPostsSuccess, fetchPostsError , fetchBearingDimensions} from '../actions';
+import { doGetBearing, fetchBearingTypes, fetchPostsRequest, fetchPostsSuccess, fetchPostsError , fetchBearingDimensions} from '../actions';
 import { connect } from 'react-redux';
 // eslint-disable-next-line
 const CheckboxGroup = Checkbox.Group;
@@ -24,14 +24,14 @@ var urlBearingTypes = URL + API_bearingTypes;
 
 class App extends Component {
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.dispatch(fetchBearingTypes());
-		this.props.dispatch(fetchBearingDimensions(1));
 	}
+	
 
 	render() {
 		console.log('isLoading-- ', this.props.dimensionsLoading);
-		if (this.props.bearingTypesLoading && this.props.dimensionsLoading) {
+		if (this.props.bearingTypesLoading ) {
 			return (
 				<div>
 					<div className="logo">
@@ -90,6 +90,7 @@ function mapStateToProps(state) {
 	console.log('state: ', state);
 	return {  
 		bearingTypes: state.bearingTypes.items,
+		selectedType: state.bearingTypes.selectedType,
 		bearingDimension: state.bearingDimension,
 		bearingTypesLoading: state.bearingTypes.isLoading,
 		dimensionsLoading: state.bearingDimension.isLoading

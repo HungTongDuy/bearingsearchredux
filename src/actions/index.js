@@ -5,6 +5,7 @@ var urlBearingTypes = URL + API_bearingTypes ;
 var urlDimension = URL + API_bearingDimensions;
 
 export function fetchBearingTypes() {
+    console.log('fetchBearingTypes');
     return (dispatch) => {
         dispatch(fetchBearingTypesRequest());
         axios.get(urlBearingTypes)
@@ -46,13 +47,14 @@ export function fetchBearingTypesError(payload) {
 }
 
 export function fetchBearingDimensions(type) {
+    console.log('fetchBearingDimensions');
     return (dispatch) => {
         dispatch(fetchDimensionsRequest());
         return fetchDimensions(type).then(([response, json]) =>{
-            if(response.status === 200){
+            if(response.status === 200) {
                 dispatch(fetchDimensionsSuccess(json))
             }
-            else{
+            else {
                 dispatch(fetchDimensionsError())
             }
         })
@@ -82,4 +84,11 @@ export function fetchDimensionsError(payload) {
       type: "FETCH_DIMENSIONS_ERROR",
       payload
     }
+}
+
+export function doGetBearing(selectedType) {
+    return dispatch => Promise.all([
+        dispatch(fetchBearingTypes()),
+        dispatch(fetchBearingDimensions(selectedType))
+    ])
 }

@@ -2,7 +2,8 @@
 const defaultState = {
     items: [],
     isLoading: false,
-    error: null
+    error: null,
+    selectedType: 1
 }
 
 const getBearingTypes = (state = defaultState, action) => {
