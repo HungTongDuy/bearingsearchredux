@@ -5,7 +5,6 @@ var urlBearingTypes = URL + API_bearingTypes ;
 var urlDimension = URL + API_bearingDimensions;
 
 export function fetchBearingTypes() {
-    console.log('fetchBearingTypes');
     return (dispatch) => {
         dispatch(fetchBearingTypesRequest());
         axios.get(urlBearingTypes)
@@ -20,9 +19,9 @@ export function fetchBearingTypes() {
 
 export function changeTypeByDropdown(val) {
     return {
-            type : 'CHANGE_TYPE',
-            bearingType : val,
-            changeBy: 'dropdown'
+        type : 'CHANGE_TYPE',
+        bearingType : val,
+        changeBy: 'dropdown'
     }
 }
 
@@ -47,12 +46,11 @@ export function fetchBearingTypesError(payload) {
 }
 
 export function fetchBearingDimensions(type) {
-    console.log('fetchBearingDimensions');
     return (dispatch) => {
-        dispatch(fetchDimensionsRequest());
+        dispatch(fetchDimensionsRequest(type));
         return fetchDimensions(type).then(([response, json]) =>{
             if(response.status === 200) {
-                dispatch(fetchDimensionsSuccess(json))
+                dispatch(fetchDimensionsSuccess(json, type))
             }
             else {
                 dispatch(fetchDimensionsError())
@@ -61,21 +59,32 @@ export function fetchBearingDimensions(type) {
     }
 }
 
+export function sendDimensionFilter(inside, outside, thick) {
+    return {
+        type: 'SEND_DIMENSION_FILTER',
+        inside: inside,
+        outside: outside,
+        thick: thick
+    }
+}
+
 function fetchDimensions(type) {
     return fetch(urlDimension + type, { method: 'GET'})
        .then( response => Promise.all([response, response.json()]));
 }
 
-export function fetchDimensionsRequest() {
+export function fetchDimensionsRequest(type) {
     return {
-        type: "FETCH_DIMENSIONS_REQUEST"
+        type : "FETCH_DIMENSIONS_REQUEST",
+        selectedType : type
     }
 }
 
-export function fetchDimensionsSuccess(payload) {
+export function fetchDimensionsSuccess(payload, type) {
     return {
       type: "FETCH_DIMENSIONS_SUCCESS",
-      payload
+      payload,
+      selectedType : type
     }
 }
   

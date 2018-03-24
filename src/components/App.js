@@ -4,11 +4,11 @@ import logo from "../images/logo.jpg";
 // eslint-disable-next-line
 import { Row, Col, Checkbox } from 'antd';
 // eslint-disable-next-line
-import BearingDimension from './bearingDimension.js';
+import BearingDimension from './bearingDimension';
 // eslint-disable-next-line
-import SearchResult from './searchResult.js';
+import SearchResult from './searchResult';
 // eslint-disable-next-line
-import BearingType from './bearingType.jsx';
+import BearingType from './bearingType';
 // eslint-disable-next-line
 import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../constants/constants.js';
 
@@ -27,10 +27,9 @@ class App extends Component {
 	componentDidMount() {
 		this.props.dispatch(fetchBearingTypes());
 	}
-	
 
 	render() {
-		console.log('isLoading-- ', this.props.dimensionsLoading);
+		console.log('render-app');
 		if (this.props.bearingTypesLoading ) {
 			return (
 				<div>
@@ -52,7 +51,7 @@ class App extends Component {
 				</div>
 			);
 		}
-		console.log('bearingdimension-- ', this.props.bearingDimension);
+		//console.log('bearingdimension-- ', this.props.bearingDimension);
 		return (
 			<div>
 				<div className="logo">
@@ -87,7 +86,7 @@ function SearchLoading() {
 }
 
 function mapStateToProps(state) {
-	console.log('state: ', state);
+	console.log('state-app: ', state);
 	return {  
 		bearingTypes: state.bearingTypes.items,
 		selectedType: state.bearingTypes.selectedType,

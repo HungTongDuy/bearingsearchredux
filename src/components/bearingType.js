@@ -6,7 +6,7 @@ import {  Select, Carousel } from 'antd';
 
 import { connect } from 'react-redux';
 import { changeTypeByDropdown } from '../actions';
-import { fetchBearingTypes } from '../actions';
+import { fetchBearingDimensions } from '../actions';
 const Option = Select.Option;
 
 var settings_carousel = {
@@ -34,15 +34,9 @@ class bearingType extends React.Component {
 		super();
 		this.changeTypeBySelection = this.changeTypeBySelection.bind(this);
 		this.changeTypeByCarousel = this.changeTypeByCarousel.bind(this);
-		this.demo = this.demo.bind(this);
-	}
-
-	componentDidMount() {
-		
 	}
 
 	changeTypeBySelection(value) {
-		console.log('changeTypeBySelection: ', value);
 		var numberSlider = "";
 		this.props.bearingTypes.map((item,key) => {
 			if (item.type == value) {
@@ -50,28 +44,21 @@ class bearingType extends React.Component {
 			}
 		});
 		this.refs.slider.goTo(numberSlider);
-		this.props.dispatch(changeTypeByDropdown(value));
+		this.props.dispatch(fetchBearingDimensions(value));
 	}
 	
 	//change bearing type when scroll carousel
 	changeTypeByCarousel(index) {
-		console.log('changeTypeByCarousel: ', index);
-		//var type = this.props.bearingTypes[index].type;
-		//this.props.getTypeByCarousel(index);
-	}
-
-	demo() {
-		console.log('this.props.bearingTypes', this.props.bearingTypes);
+		var type = this.props.bearingTypes[index].type;
+		this.props.dispatch(fetchBearingDimensions(type));
 	}
 
 	render() {
-		this.demo;
 		var img_path = "../images/BearingTypes/";
 		var list_item = this.props.bearingTypes.map((item, k) => {
 			return (
 				<div key={k} className="item" id={"type_" + item.type}>
 					<div className="slide-caption">
-					
 						<img src={require("../images/BearingTypes/image1.png")} />
 						<input type="hidden" className="typeId" value={item.type} />
 						<h2 className="slide-caption-title" id={item.type}>{item.title}</h2>
@@ -127,12 +114,11 @@ bearingType.propTypes = {
 };
 
 function mapStateToProps(state){
-	console.log('state-bearingTypes: ', state);
 	return {  
 		bearingTypes: state.bearingTypes.items,
 		bearingDimension: state.bearingDimension,
 		isLoading: state.bearingTypes.isLoading,
-		selectedType: state.bearingTypes.selectedType
+		selectedType: state.bearingDimension.selectedType
   	}
 }
 

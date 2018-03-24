@@ -1,9 +1,7 @@
-
 const defaultState = {
     items: [],
     isLoading: false,
-    error: null,
-    selectedType: 1
+    error: null
 }
 
 const getBearingTypes = (state = defaultState, action) => {
@@ -18,8 +16,7 @@ const getBearingTypes = (state = defaultState, action) => {
             return {
                 ...state,
                 items: action.payload,
-                isLoading: false,
-                selectedType: 1
+                isLoading: false
             };
         case "FETCH_BEARING_TYPES_ERROR":
             return { 
