@@ -12,7 +12,7 @@ import BearingType from './bearingType';
 // eslint-disable-next-line
 import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../constants/constants.js';
 
-import { doGetBearing, fetchBearingTypes, fetchPostsRequest, fetchPostsSuccess, fetchPostsError , fetchBearingDimensions} from '../actions';
+import { fetchBearingTypes, fetchPostsRequest, fetchPostsSuccess, fetchPostsError , fetchBearingDimensions} from '../actions';
 import { connect } from 'react-redux';
 // eslint-disable-next-line
 const CheckboxGroup = Checkbox.Group;

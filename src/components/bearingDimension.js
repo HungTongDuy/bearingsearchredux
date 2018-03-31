@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { fetchBearingDimensions, sendDimensionFilter } from '../actions';
+import { fetchBearingDimensions, sendDimensionFilter, fetchResultRequest } from '../actions';
 
 import { AutoComplete } from 'antd';
 import { message, Select } from 'antd';
@@ -22,7 +22,7 @@ class DimensionSearch extends React.Component {
 	}
 
 	submitSearch(val) {
-		this.props.sendDimensionToSearch();
+		this.props.dispatch(fetchResultRequest());
 	}
 
 	componentWillMount() {

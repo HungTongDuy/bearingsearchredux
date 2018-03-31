@@ -3,6 +3,7 @@ import axios from 'axios'
 import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../constants/constants.js';
 var urlBearingTypes = URL + API_bearingTypes ;
 var urlDimension = URL + API_bearingDimensions;
+var urlResult = URL + API_bearings;
 
 export function fetchBearingTypes() {
     return (dispatch) => {
@@ -100,4 +101,52 @@ export function doGetBearing(selectedType) {
         dispatch(fetchBearingTypes()),
         dispatch(fetchBearingDimensions(selectedType))
     ])
+}
+
+export function fetchResult(typeId, outside, inside, thick) {
+    var str_inside = "";
+    var str_outside = "";
+    var str_thick = "";
+    
+    if (inside.toString() != '' && inside != '-1' && inside != undefined) {
+        str_inside = "&d=" + inside;
+    }
+    if (outside.toString() != '' && outside != '-1' && outside != undefined) {
+        str_outside = "&D=" + outside;
+    }
+    if (thick.toString() != '' && thick != '-1' && thick != undefined) {
+        str_thick = "&B=" + thick;
+    }
+
+    return (dispatch) => {
+        dispatch(fetchResultRequest());
+        axios.get(urlResult + '?bearing_type=' + typeId + str_inside + str_outside + str_thick)
+        .then((response) => {
+          dispatch(fetchResultSuccess(typeId, response.data))
+        })
+        .catch((error) => {
+          dispatch(fetchResultError(error))
+        })
+    };
+}
+
+export function fetchResultRequest() {
+    return {
+        type: "FETCH_RESULT_REQUEST"
+    }
+}
+
+export function fetchResultSuccess(typeId, payload) {
+    return {
+      type: "FETCH_RESULT_SUCCESS",
+      typeId,
+      payload
+    }
+}
+  
+export function fetchResultError(payload) {
+    return {
+      type: "FETCH_RESULT_ERROR",
+      payload
+    }
 }
