@@ -21,6 +21,7 @@ function filterPartNumber(result) {
 };
 
 const getResult = (state = [], action) => {
+    console.log('action result ', action);
     switch(action.type) {
         case "FETCH_RESULT_REQUEST":
             return {
@@ -48,7 +49,16 @@ const getResult = (state = [], action) => {
                 items: []
             };
 
+        case "FILTER_DRAWING":
+            return {
+                ...state,
+                result: action.filterResult,
+                checkedList: action.checkedList
+            };
+
         default :
             return state;
     }
 }
+
+export default getResult;

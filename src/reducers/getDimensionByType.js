@@ -71,14 +71,14 @@ function getDimensionByType(state = defaultState, action) {
         case "FETCH_DIMENSIONS_SUCCESS":
             return {
                 ...state,
-                beforeFilterDimensions : action.payload, 
+                beforeFilterDimensions : action.payload,
                 items: action.payload,
                 isLoading: false,
                 selectedType: action.selectedType
             };
 
         case "FETCH_DIMENSIONS_ERROR":
-            return { 
+            return {
                 ...state,
                 isLoading: false,
                 error: action.payload.error,

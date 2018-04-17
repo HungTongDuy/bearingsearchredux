@@ -26,20 +26,20 @@ export function changeTypeByDropdown(val) {
     }
 }
 
-export function fetchBearingTypesRequest() {
+function fetchBearingTypesRequest() {
     return {
         type: "FETCH_BEARING_TYPES_REQUEST"
     }
 }
 
-export function fetchBearingTypesSuccess(payload) {
+function fetchBearingTypesSuccess(payload) {
     return {
       type: "FETCH_BEARING_TYPES_SUCCESS",
       payload
     }
 }
   
-export function fetchBearingTypesError(payload) {
+function fetchBearingTypesError(payload) {
     return {
       type: "FETCH_BEARING_TYPES_ERROR",
       payload
@@ -74,14 +74,14 @@ function fetchDimensions(type) {
        .then( response => Promise.all([response, response.json()]));
 }
 
-export function fetchDimensionsRequest(type) {
+function fetchDimensionsRequest(type) {
     return {
         type : "FETCH_DIMENSIONS_REQUEST",
         selectedType : type
     }
 }
 
-export function fetchDimensionsSuccess(payload, type) {
+function fetchDimensionsSuccess(payload, type) {
     return {
       type: "FETCH_DIMENSIONS_SUCCESS",
       payload,
@@ -89,7 +89,7 @@ export function fetchDimensionsSuccess(payload, type) {
     }
 }
   
-export function fetchDimensionsError(payload) {
+function fetchDimensionsError(payload) {
     return {
       type: "FETCH_DIMENSIONS_ERROR",
       payload
@@ -103,7 +103,7 @@ export function doGetBearing(selectedType) {
     ])
 }
 
-export function fetchResult(typeId, outside, inside, thick) {
+export function fetchResult(typeId, inside, outside, thick) {
     var str_inside = "";
     var str_outside = "";
     var str_thick = "";
@@ -118,6 +118,8 @@ export function fetchResult(typeId, outside, inside, thick) {
         str_thick = "&B=" + thick;
     }
 
+    console.log('result ', urlResult + '?bearing_type=' + typeId + str_inside + str_outside + str_thick);
+
     return (dispatch) => {
         dispatch(fetchResultRequest());
         axios.get(urlResult + '?bearing_type=' + typeId + str_inside + str_outside + str_thick)
@@ -130,13 +132,13 @@ export function fetchResult(typeId, outside, inside, thick) {
     };
 }
 
-export function fetchResultRequest() {
+function fetchResultRequest() {
     return {
         type: "FETCH_RESULT_REQUEST"
     }
 }
 
-export function fetchResultSuccess(typeId, payload) {
+function fetchResultSuccess(typeId, payload) {
     return {
       type: "FETCH_RESULT_SUCCESS",
       typeId,
@@ -144,9 +146,18 @@ export function fetchResultSuccess(typeId, payload) {
     }
 }
   
-export function fetchResultError(payload) {
+function fetchResultError(payload) {
     return {
       type: "FETCH_RESULT_ERROR",
       payload
+    }
+}
+
+export function filterDrawing(filterResult, checkedList) {
+    console.log('filterDrawing');
+    return {
+        type: "FILTER_DRAWING",
+        filterResult, 
+        checkedList
     }
 }

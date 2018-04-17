@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class SearchResult extends React.Component {
 
 	render() {
-		var img_path = "./public/images/Bearings/";
+		var img_path = "../images/Bearings/";
 		var list_item = this.props.resultData.map((item, key) => {
 			var defineClass = '';
 			if ((key % 3) === 0) {
@@ -24,13 +24,12 @@ class SearchResult extends React.Component {
 			var comp_4 = <h3 className="result-title">{item.comp_4}</h3>;
 
 			var precision = <h3 className="result-title precision-title">PRECISION</h3>;
-			
 			return (
 				<div key={key} className={"col-md-4 col-sm-4 col-xs-12 item-result " + defineClass + " type_" + this.props.typeSearch + " drw-" + item.part_number + (item.isPrecision === true ? " precision" : "")}>
 					<div className="item-product">
 						<div className="border-product">
 							<div className="left-product">
-								<img src={img_path + item.part_number + ".png"} />
+								<img src={require(`../images/Bearings/${item.part_number}.png`)} alt={item.part_number}/>
 							</div>
 							<div className="right-product">
 								{item.isPrecision === true ? precision:""}

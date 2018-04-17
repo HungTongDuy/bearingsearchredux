@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { fetchBearingDimensions, sendDimensionFilter, fetchResultRequest } from '../actions';
+import { fetchBearingDimensions, sendDimensionFilter, fetchResult } from '../actions';
 
 import { AutoComplete } from 'antd';
 import { message, Select } from 'antd';
@@ -17,16 +17,15 @@ class DimensionSearch extends React.Component {
 	}
 
 	getDimensionFilter(inside, outside, thick) {
-		this.props.dispatch(sendDimensionFilter(inside, outside, thick));
-
+		this.props.sendDimensionFilter(inside, outside, thick);
 	}
 
-	submitSearch(val) {
-		this.props.dispatch(fetchResultRequest());
+	submitSearch() {
+		this.props.fetchResult(this.props.selectedType, this.props.selectedInside, this.props.selectedOutside, this.props.selectedThick);
 	}
 
 	componentWillMount() {
-		this.props.dispatch(fetchBearingDimensions(1));
+		this.props.fetchBearingDimensions(1);
 	}
 
 	render() {
@@ -198,5 +197,5 @@ function mapStateToProps(state){
 		selectedThick: state.bearingDimension.selectedThick
   	}
 }
-DimensionSearch = connect(mapStateToProps)(DimensionSearch);
+DimensionSearch = connect(mapStateToProps, { fetchBearingDimensions, sendDimensionFilter, fetchResult })(DimensionSearch);
 export default DimensionSearch;

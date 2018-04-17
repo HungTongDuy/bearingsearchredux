@@ -59,7 +59,7 @@ class bearingType extends React.Component {
 			return (
 				<div key={k} className="item" id={"type_" + item.type}>
 					<div className="slide-caption">
-						<img src={require("../images/BearingTypes/image1.png")} />
+						<img src={require(`../images/BearingTypes/${item.image_name}`)} />
 						<input type="hidden" className="typeId" value={item.type} />
 						<h2 className="slide-caption-title" id={item.type}>{item.title}</h2>
 					</div>
