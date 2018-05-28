@@ -1,3 +1,4 @@
+"use strict";
 const defaultState = {
     beforeFilterResult : [],
     result: [],
@@ -54,6 +55,14 @@ const getResult = (state = [], action) => {
                 ...state,
                 result: action.filterResult,
                 checkedList: action.checkedList
+            };
+        
+        case "FETCH_DIMENSIONS_SUCCESS":
+            return {
+                ...state,
+                beforeFilterResult: [],
+                result: [],
+                checkedList: []
             };
 
         default :

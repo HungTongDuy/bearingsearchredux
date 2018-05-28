@@ -1,3 +1,4 @@
+"use strict";
 import React, { Component } from 'react';
 // eslint-disable-next-line
 import logo from "../images/logo.jpg";
@@ -137,7 +138,7 @@ class App extends Component {
 						</div>
 						/* end div result */
 					}
-					<div title='Back to top' className='scroll' id="scroll_top" onClick={this.scrollToTop}></div>
+					{/* <div title='Back to top' className='scroll' id="scroll_top" onClick={this.scrollToTop}></div> */}
 				</div>
 				{this.props.bearingTypesLoading ? <SearchLoading /> : "" }
 				{this.props.dimensionsLoading ? <SearchLoading /> : "" }
@@ -163,7 +164,7 @@ function SearchLoading() {
 
 function mapStateToProps(state) {
 	console.log('state-app: ', state);
-	return {  
+	return {
 		bearingTypes: state.bearingTypes.items,
 		selectedType: state.bearingTypes.selectedType,
 		bearingDimension: state.bearingDimension,
@@ -177,5 +178,6 @@ function mapStateToProps(state) {
 		typeSearch: state.result.selectedType
   	}
 }
+
 App = connect(mapStateToProps, { fetchBearingTypes, filterDrawing })(App)
 export default App;

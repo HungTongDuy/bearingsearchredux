@@ -1,3 +1,4 @@
+"use strict";
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -186,7 +187,8 @@ DimensionSearch.propTypes = {
 	isSearchLoading : PropTypes.bool
 };
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
+	console.log('map-dimension', state);
 	return {  
 		dimension: state.bearingDimension.items,
 		isLoading: state.bearingDimension.isLoading,
@@ -197,5 +199,6 @@ function mapStateToProps(state){
 		selectedThick: state.bearingDimension.selectedThick
   	}
 }
+
 DimensionSearch = connect(mapStateToProps, { fetchBearingDimensions, sendDimensionFilter, fetchResult })(DimensionSearch);
 export default DimensionSearch;

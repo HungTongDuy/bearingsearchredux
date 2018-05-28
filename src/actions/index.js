@@ -1,4 +1,5 @@
-import axios from 'axios'
+"use strict";
+import axios from 'axios';
 
 import { URL, API_bearingDimensions, API_bearingTypes, API_bearings } from '../constants/constants.js';
 var urlBearingTypes = URL + API_bearingTypes ;
@@ -32,10 +33,10 @@ function fetchBearingTypesRequest() {
     }
 }
 
-function fetchBearingTypesSuccess(payload) {
+function fetchBearingTypesSuccess(data) {
     return {
       type: "FETCH_BEARING_TYPES_SUCCESS",
-      payload
+      data
     }
 }
   
@@ -69,7 +70,7 @@ export function sendDimensionFilter(inside, outside, thick) {
     }
 }
 
-function fetchDimensions(type) {
+export function fetchDimensions(type) {
     return fetch(urlDimension + type, { method: 'GET'})
        .then( response => Promise.all([response, response.json()]));
 }

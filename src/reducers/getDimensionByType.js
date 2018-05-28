@@ -1,3 +1,4 @@
+"use strict";
 const defaultState = {
     items: [],
     isLoading: false,
@@ -74,7 +75,10 @@ function getDimensionByType(state = defaultState, action) {
                 beforeFilterDimensions : action.payload,
                 items: action.payload,
                 isLoading: false,
-                selectedType: action.selectedType
+                selectedType: action.selectedType,
+                selectedInside: '-1',
+                selectedOutside: '-1',
+                selectedThick: '-1'
             };
 
         case "FETCH_DIMENSIONS_ERROR":

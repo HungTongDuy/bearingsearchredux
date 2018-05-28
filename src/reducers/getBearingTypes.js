@@ -5,6 +5,8 @@ const defaultState = {
 }
 
 const getBearingTypes = (state = defaultState, action) => {
+    console.log('state-getBearingTypes', state);
+    console.log('action-bearingtyep', action);
     switch (action.type) {
         case "FETCH_BEARING_TYPES_REQUEST":
             return {
@@ -13,16 +15,14 @@ const getBearingTypes = (state = defaultState, action) => {
                 error: null
             };
         case "FETCH_BEARING_TYPES_SUCCESS":
-            return {
-                ...state,
-                items: action.payload,
-                isLoading: false
-            };
+            state.items = action.data;
+            state.isLoading = false;
+            return state;
         case "FETCH_BEARING_TYPES_ERROR":
             return { 
                 ...state,
                 isLoading: false,
-                error: action.payload.error,
+                error: action.data.error,
                 items: []
             };
         default:

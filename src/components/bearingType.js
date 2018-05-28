@@ -1,3 +1,4 @@
+"use strict";
 import React from 'react';
 
 import PropTypes from 'prop-types';
@@ -5,8 +6,7 @@ import PropTypes from 'prop-types';
 import {  Select, Carousel } from 'antd';
 
 import { connect } from 'react-redux';
-import { changeTypeByDropdown } from '../actions';
-import { fetchBearingDimensions } from '../actions';
+import { changeTypeByDropdown, fetchBearingDimensions } from '../actions';
 const Option = Select.Option;
 
 var settings_carousel = {
@@ -44,13 +44,13 @@ class bearingType extends React.Component {
 			}
 		});
 		this.refs.slider.goTo(numberSlider);
-		this.props.dispatch(fetchBearingDimensions(value));
+		this.props.fetchBearingDimensions(value);
 	}
 	
 	//change bearing type when scroll carousel
 	changeTypeByCarousel(index) {
 		var type = this.props.bearingTypes[index].type;
-		this.props.dispatch(fetchBearingDimensions(type));
+		this.props.fetchBearingDimensions(type);
 	}
 
 	render() {
@@ -114,6 +114,7 @@ bearingType.propTypes = {
 };
 
 function mapStateToProps(state){
+	console.log('map-bearingtype', state.bearingTypes);
 	return {  
 		bearingTypes: state.bearingTypes.items,
 		bearingDimension: state.bearingDimension,
@@ -122,5 +123,5 @@ function mapStateToProps(state){
   	}
 }
 
-bearingType = connect(mapStateToProps)(bearingType);
+bearingType = connect(mapStateToProps, { changeTypeByDropdown, fetchBearingDimensions })(bearingType);
 export default bearingType;
